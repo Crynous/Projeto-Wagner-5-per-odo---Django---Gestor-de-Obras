@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 400px;">
+        <h3 class="text-center mb-4">Entrar no Sistema</h3>
+        
+        <form method="POST" action="{% url 'users:login_view' %}">
+            {% csrf_token %}
+            
+            <!-- Nome de Usuário -->
+            <div class="form-group">
+                <label for="username">Nome de Usuário</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Digite seu nome de usuário" required>
+            </div>
+            
+            <!-- Senha -->
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha" required>
+            </div>
+            
+            <!-- Botões -->
+            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+            <a href="{% url 'users:create_user_view' %}" class="btn btn-link btn-block mt-2">Registre-se</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

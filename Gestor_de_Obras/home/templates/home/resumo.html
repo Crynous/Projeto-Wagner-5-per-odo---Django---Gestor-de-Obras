@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Home{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <h1>Bem-vindo, {{ user.username }}!</h1>
+    <p>Você está visualizando os últimos usuários cadastrados, além de poder explorar as obras que passaram por modificações recentemente!</p>
+
+    <div class="row">
+        <!-- Bloco de Usuários -->
+        <div class="col-md-6">
+            <h4>Últimos Usuários Cadastrados no Sistema</h4>
+            <ul class="list-group">
+                {% for usuario in ultimos_usuarios %}
+                    <li class="list-group-item">
+                        <strong>{{ usuario.username }}</strong> - Criado em {{ usuario.date_joined|date:"d/m/Y" }}
+                    </li>
+                {% endfor %}
+            </ul>
+           <!--  <a href="{% url 'users:list' %}" class="btn btn-primary mt-3">Gerenciar Usuários</a> -->
+        </div>
+
+        <!-- Bloco de Obras -->
+        <div class="col-md-6">
+            <h4>Obras modificadas recentemente</h4>
+            <ul class="list-group">
+                {% for obra in ultimas_obras %}
+                    <li class="list-group-item">
+                        <strong>{{ obra.nome }}</strong> - Modificada em {{ obra.data_modificacao|date:"d/m/Y" }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'obras:listar_obras' %}" class="btn btn-primary mt-3">Gerenciar Obras</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+
+
+
+{% extends "base.html" %}
+
+{% block title %}Excluir Obra{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-danger text-white">Excluir Obra</div>
+        <div class="card-body text-center">
+            <p>Tem certeza que deseja excluir <strong>"{{ obra.nome }}"</strong>?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Confirmar</button>
+                <a href="{% url 'obras:listar_obras' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

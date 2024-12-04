@@ -1,0 +1,40 @@
+
+
+
+{% extends "base.html" %}
+
+{% block title %}Lista de Obras{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Lista de Obras</h2>
+    <div class="text-end mb-3">
+        <a href="{% url 'obras:criar_obra' %}" class="btn btn-primary">Nova Obra</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Engenheiro Responsável</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obra in obras %}
+            <tr>
+                <td>{{ obra.nome }}</td>
+                <td>{{ obra.engenheiro_responsavel.nome }}</td>
+                <td>
+                    <a href="{% url 'obras:editar_obra' obra.id %}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{% url 'obras:excluir_obra' obra.id %}" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">Nenhuma obra cadastrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

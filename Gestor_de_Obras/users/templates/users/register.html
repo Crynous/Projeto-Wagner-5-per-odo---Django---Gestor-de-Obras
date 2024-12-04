@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro de Usuário{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Registro de Usuário</h2>
+    <form method="post" action="{% url 'users:create_user_view' %}">
+        
+        {% csrf_token %}
+        
+        <!-- Grupo 1: Informações de Login -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Informações de Login</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="username" class="form-label">Nome de Usuário</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="username" 
+                            name="username" 
+                            value="{{ username|default:'' }}" 
+                            required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            id="email" 
+                            name="email" 
+                            value="{{ email|default:'' }}" 
+                            required>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password_confirm" class="form-label">Confirme a Senha</label>
+                        <input type="password" class="form-control" id="password_confirm" name="password_confirm" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grupo 2: Informações do Perfil -->
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">Informações do Perfil</div>
+            <div class="card-body">
+                <div class="row">
+                    {% for field in form %}
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        <input 
+                            type="{{ field.field.widget.input_type|default:'text' }}" 
+                            class="form-control" 
+                            id="{{ field.id_for_label }}" 
+                            name="{{ field.html_name }}" 
+                            value="{{ field.value|default:'' }}" 
+                            {% for attr, value in field.field.widget.attrs.items %} 
+                            {{ attr }}="{{ value }}" 
+                            {% endfor %}
+                        >
+                        {% if field.help_text %}
+                        <small class="text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {{ field.errors }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <a href="{% url 'users:login_view' %}" class="btn btn-secondary">Já tenho conta</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
